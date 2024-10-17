@@ -5,17 +5,17 @@ from random import randint, choice
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
-		player_walk_1 = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
-		player_walk_2 = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
+		player_walk_1 = pygame.image.load('Jumpy Jump Jump/graphics/Player/player_walk_1.png').convert_alpha() # Jumpy Jump Jump/graphics/Player/player_walk_1.png
+		player_walk_2 = pygame.image.load('Jumpy Jump Jump/graphics/Player/player_walk_2.png').convert_alpha()
 		self.player_walk = [player_walk_1,player_walk_2]
 		self.player_index = 0
-		self.player_jump = pygame.image.load('graphics/player/jump.png').convert_alpha()
+		self.player_jump = pygame.image.load('Jumpy Jump Jump/graphics/Player/jump.png').convert_alpha()
 
 		self.image = self.player_walk[self.player_index]
 		self.rect = self.image.get_rect(midbottom = (80,300))
 		self.gravity = 0
 
-		self.jump_sound = pygame.mixer.Sound('audio/jump.mp3')
+		self.jump_sound = pygame.mixer.Sound('Jumpy Jump Jump/audio/jump.mp3')
 		self.jump_sound.set_volume(0.5)
 
 	def player_input(self):
@@ -46,15 +46,15 @@ class Player(pygame.sprite.Sprite):
 class Obstacle(pygame.sprite.Sprite):
 	def __init__(self,type):
 		super().__init__()
-		
+
 		if type == 'fly':
-			fly_1 = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
-			fly_2 = pygame.image.load('graphics/fly/fly2.png').convert_alpha()
+			fly_1 = pygame.image.load('Jumpy Jump Jump/graphics/Fly/Fly1.png').convert_alpha()
+			fly_2 = pygame.image.load('Jumpy Jump Jump/graphics/Fly/Fly2.png').convert_alpha()
 			self.frames = [fly_1,fly_2]
 			y_pos = 210
 		else:
-			snail_1 = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
-			snail_2 = pygame.image.load('graphics/snail/snail2.png').convert_alpha()
+			snail_1 = pygame.image.load('Jumpy Jump Jump/graphics/snail/snail1.png').convert_alpha()
+			snail_2 = pygame.image.load('Jumpy Jump Jump/graphics/snail/snail2.png').convert_alpha()
 			self.frames = [snail_1,snail_2]
 			y_pos  = 300
 
@@ -94,11 +94,12 @@ pygame.init()
 screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption('Jumpy Jump Jump')
 clock = pygame.time.Clock()
-test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
+test_font = pygame.font.Font('Jumpy Jump Jump/font/Pixeltype.ttf', 50) #/home/mark/Desktop/Coding/Jumpy-Jump-Jump_Game-main/Jumpy Jump Jump/font/Pixeltype.ttf
+# Jumpy Jump Jump/font/Pixeltype.ttf
 game_active = False
 start_time = 0
 score = 0
-bg_music = pygame.mixer.Sound('audio/music.wav')
+bg_music = pygame.mixer.Sound('Jumpy Jump Jump/audio/music.wav')
 bg_music.play(loops = -1)
 
 #Groups
@@ -107,11 +108,11 @@ player.add(Player())
 
 obstacle_group = pygame.sprite.Group()
 
-sky_surface = pygame.image.load('graphics/Sky.png').convert()
-ground_surface = pygame.image.load('graphics/ground.png').convert()
+sky_surface = pygame.image.load('Jumpy Jump Jump/graphics/Sky.png').convert()
+ground_surface = pygame.image.load('Jumpy Jump Jump/graphics/ground.png').convert()
 
 # Intro screen
-player_stand = pygame.image.load('graphics/player/player_stand.png').convert_alpha()
+player_stand = pygame.image.load('Jumpy Jump Jump/graphics/Player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand,0,2)
 player_stand_rect = player_stand.get_rect(center = (400,200))
 
@@ -134,7 +135,7 @@ while True:
 		if game_active:
 			if event.type == obstacle_timer:
 				obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
-		
+
 		else:
 			if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
 				game_active = True
@@ -145,7 +146,7 @@ while True:
 		screen.blit(sky_surface,(0,0))
 		screen.blit(ground_surface,(0,300))
 		score = display_score()
-		
+
 		player.draw(screen)
 		player.update()
 
@@ -153,7 +154,7 @@ while True:
 		obstacle_group.update()
 
 		game_active = collision_sprite()
-		
+
 	else:
 		screen.fill((94,129,162))
 		screen.blit(player_stand,player_stand_rect)
